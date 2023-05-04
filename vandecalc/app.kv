@@ -1,3 +1,5 @@
+#:import web web_scraping
+
 <ContentNavigationDrawer>
 
     MDList:
@@ -58,7 +60,7 @@ MDScreen:
 #                    md_bg_color: app.theme_cls.primary_color
                     MDBoxLayout:
                         id: main_screen_box
-#                        pos_hint: {"top": 1.0 - topbar.height / self.parent.height}
+                        pos_hint: {"top": 1.0 - topbar.height / self.parent.height}
                         adaptive_height: True
                         orientation: "vertical"
                         padding: 5
@@ -110,7 +112,11 @@ MDScreen:
                             cols: 2
 
                             MDLabel:
-                                text: "Gaspreis"
+                                text: 'Gaspreis [color=ff3333][ref=some](Quelle)[/ref][/color]'
+                                markup: True
+                                on_ref_press:
+                                    import webbrowser
+                                    webbrowser.open(web.GAS_PRICE_URL)
                             CustomTextField:
                                 hint_text: "€/kWh"
                                 text: str(app.pr.gas_price)
@@ -243,7 +249,11 @@ MDScreen:
                         cols: 2
                         
                         MDLabel:
-                            text: "Zinsen"
+                            text: 'Zinsen [color=ff3333][ref=some](Quelle)[/ref][/color]'
+                            markup: True
+                            on_ref_press:
+                                import webbrowser
+                                webbrowser.open(web.INTEREST_PERCENT_URL)
                         CustomTextField:
                             hint_text: "%"
                             text: str(app.pr.interest_percent)

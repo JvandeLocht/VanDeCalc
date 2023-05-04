@@ -13,7 +13,7 @@ def main():
     print(gas_price)
 
 
-INTERNET_PERCENT_URL = "https://www.drklein.de/"
+INTEREST_PERCENT_URL = "https://www.drklein.de/"
 GAS_PRICE_URL = "https://www.ndr.de/nachrichten/info/Gaspreis-aktuell-wie-viel-kostet-Kilowattstunde,gaspreis142.html"
 
 
@@ -23,7 +23,7 @@ def convert_coma_string_to_float(string: str) -> float:
 
 
 try:
-    interest_percent_response = requests.get(INTERNET_PERCENT_URL)
+    interest_percent_response = requests.get(INTEREST_PERCENT_URL)
     gas_price_response = requests.get(GAS_PRICE_URL)
 
     interest_percent_soup = BeautifulSoup(interest_percent_response.text, "html.parser")

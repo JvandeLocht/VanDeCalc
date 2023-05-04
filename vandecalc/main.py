@@ -2,7 +2,6 @@
 """
 A simple Program to calculate the monthly cost for a house.
 """
-# import calc
 from calc import HouseProperties
 from kivy.event import EventDispatcher
 from kivy.lang import Builder
