@@ -1,0 +1,267 @@
+<ContentNavigationDrawer>
+
+    MDList:
+
+        OneLineListItem:
+            text: "Immobilie"
+            on_press:
+                root.nav_drawer.set_state("close")
+                root.screen_manager.current = "main_screen"
+
+        OneLineListItem:
+            text: "Prozente"
+            on_press:
+                root.nav_drawer.set_state("close")
+                root.screen_manager.current = "perc_screen"
+
+<CaptionLabel@MDLabel>:
+    font_style: "H4"
+    size_hint_y: None
+    height: dp(40)
+
+<CustomTextField@MDTextField>:
+    input_filter: "float"
+    input_type: "number"
+    hint_text_color_focus: "grey"
+    text_color_focus: "black"
+    size_hint_x: None
+    width: dp(130)
+
+<CustomLabel@MDLabel>:
+    size_hint_y: None
+    height: self.texture_size[1]
+
+<CustomLabelRight@MDLabel>:
+    size_hint_y: None
+    size_hint_x: None
+    height: self.texture_size[1]
+    width: dp(130)
+
+MDScreen:
+
+    MDTopAppBar:
+        id: topbar
+        pos_hint: {"top": 1}
+        elevation: 4
+        title: "VanDeCalc"
+        left_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
+
+    MDNavigationLayout:
+
+        MDScreenManager:
+            id: screen_manager
+
+            MDScreen:
+                name: "main_screen"
+                MDScrollView:
+                    pos_hint: {"top": 1.0 - topbar.height / self.parent.height}
+#                    md_bg_color: app.theme_cls.primary_color
+                    MDBoxLayout:
+                        id: main_screen_box
+#                        pos_hint: {"top": 1.0 - topbar.height / self.parent.height}
+                        adaptive_height: True
+                        orientation: "vertical"
+                        padding: 5
+
+                        CaptionLabel:
+                            text: "Immobilie"
+
+                        MDGridLayout:
+                            adaptive_height: True
+                            md_bg_color: app.theme_cls.primary_color
+                            cols: 2
+                            
+                            MDLabel:
+                                text: "Kaufpreis"
+                            CustomTextField:
+                                hint_text: "€"
+                                on_text: 
+                                    app.pr.sales_price = app.error_handler(args[1])
+
+                            MDLabel:
+                                text: "Eigenkapital"
+                            CustomTextField:
+                                hint_text: "€"
+                                on_text: 
+                                    app.pr.equity = app.error_handler(args[1])
+                                
+                            MDLabel:
+                                text: "Wohnfläche"
+                            CustomTextField:
+                                hint_text: "m²"
+                                on_text: 
+                                    app.pr.living_space = app.error_handler(args[1])
+
+                            MDLabel:
+                                text: "Primär Energieverbrauch"
+                            CustomTextField:
+                                hint_text: "kWh/(m²*a)"
+                                on_text: 
+                                    app.pr.energy_consumption = app.error_handler(args[1])
+                                    
+####################################################################################################
+
+                        CaptionLabel:
+                            text: "Energie"
+
+                        MDGridLayout:
+                            adaptive_height: True
+                            md_bg_color: app.theme_cls.primary_color
+                            cols: 2
+
+                            MDLabel:
+                                text: "Gaspreis"
+                            CustomTextField:
+                                hint_text: "€/kWh"
+                                text: str(app.pr.gas_price)
+                                on_text: 
+                                    app.pr.gas_price = app.error_handler(args[1])
+
+####################################################################################################
+
+                        CaptionLabel:
+                            text: "Ergebnisse"
+
+                        MDGridLayout:
+                            id: res_screen
+                            adaptive_height: True
+                            md_bg_color: app.theme_cls.primary_color
+                            cols: 2
+
+                            CustomLabel:
+                                text: "Grunderwerbsteuer"
+                            CustomLabelRight:
+                                text: str(app.pr.land_purchase_tax) + " €"
+
+                            CustomLabel:
+                                text: "Maklerprovision"
+                            CustomLabelRight:
+                                text: str(app.pr.brokerage) + " €"
+
+                            CustomLabel:
+                                text: "Notarkosten"
+                            CustomLabelRight:
+                                text: str(app.pr.notary_fees) + " €"
+
+                            CustomLabel:
+                                text: "Grundbucheintrag"
+                            CustomLabelRight:
+                                text: str(app.pr.entry_land_register) + " €"
+                                
+                            CustomLabel:
+                                text: "Finanzierungssumme"
+                                font_style: "H6"
+                            CustomLabelRight:
+                                text: str(app.pr.total_cost_to_be_financed) + " €"
+                                font_style: "H6"
+
+                            CustomLabel:
+                                text: "Zinskosten/Monat"
+                            CustomLabelRight:
+                                text: str(app.pr.interest_cost) + " €"
+
+                            CustomLabel:
+                                text: "Tilgung/Monat"
+                            CustomLabelRight:
+                                text: str(app.pr.liquidation) + " €"
+
+                            CustomLabel:
+                                text: "Kredit/Monat"
+                                font_style: "H6"
+                            CustomLabelRight:
+                                text: str(app.pr.total_cost_for_credit) + " €"
+                                font_style: "H6"
+
+                            CustomLabel:
+                                text: "Heizkosten/Monat"
+                            CustomLabelRight:
+                                text: str(app.pr.heating_cost) + " €"
+                            
+                            CustomLabel:
+                                text: "Gesamtkosten/Monat"
+                                font_style: "H6"
+                            CustomLabelRight:
+                                text: str(app.pr.total_cost) + " €"
+                                font_style: "H6"
+
+            MDScreen:
+                name: "perc_screen"
+
+                MDBoxLayout:
+                    id: perc_screen_box
+                    pos_hint: {"top": 1.0 - topbar.height / self.parent.height}
+                    adaptive_height: True
+                    orientation: "vertical"
+                    padding: 5
+
+                    CaptionLabel:
+                        text: "Kaufnebenkosten"
+
+                    MDGridLayout:
+                        adaptive_height: True
+                        md_bg_color: app.theme_cls.primary_color
+                        cols: 2
+                        
+                        MDLabel:
+                            text: "Grunderwerbsteuer"
+                        CustomTextField:
+                            hint_text: "%"
+                            text: str(app.pr.land_purchase_tax_percent)
+                            on_text: 
+                                app.pr.land_purchase_tax_percent = app.error_handler(args[1])
+
+                        MDLabel:
+                            text: "Maklerprovision"
+                        CustomTextField:
+                            hint_text: "%"
+                            text: str(app.pr.brokerage_percent)                            
+                            on_text: 
+                                app.pr.brokerage_percent = app.error_handler(args[1])
+
+                        MDLabel:
+                            text: "Notarkosten"
+                        CustomTextField:
+                            hint_text: "%"
+                            text: str(app.pr.notary_fees_percent)
+                            on_text: 
+                                app.pr.notary_fees_percent = app.error_handler(args[1])
+
+                        MDLabel:
+                            text: "Grundbucheintrag"
+                        CustomTextField:
+                            hint_text: "%"
+                            text: str(app.pr.entry_land_register_percent)
+                            on_text: 
+                                app.pr.entry_land_register_percent = app.error_handler(args[1])
+
+                    CaptionLabel:
+                        text: "Kredit"
+
+                    MDGridLayout:
+                        adaptive_height: True
+                        md_bg_color: app.theme_cls.primary_color
+                        cols: 2
+                        
+                        MDLabel:
+                            text: "Zinsen"
+                        CustomTextField:
+                            hint_text: "%"
+                            text: str(app.pr.interest_percent)
+                            on_text: 
+                                app.pr.interest_percent = app.error_handler(args[1])
+
+                        MDLabel:
+                            text: "Tilgung"
+                        CustomTextField:
+                            hint_text: "%"
+                            text: str(app.pr.liquidation_percent)
+                            on_text: 
+                                app.pr.liquidation_percent = app.error_handler(args[1])
+
+        MDNavigationDrawer:
+            id: nav_drawer
+            radius: (0, 16, 16, 0)
+
+            ContentNavigationDrawer:
+                screen_manager: screen_manager
+                nav_drawer: nav_drawer

@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "vandecalc"
+version = "0.1.0"
+description = ""
+authors = ["Jan van de Locht <jan.vandelocht@startmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "~3.9"
+kivy = "^2.1.0"
+buildozer = "^1.5.0"
+kivymd = "^1.1.1"
+virtualenv = "^20.23.0"
+cython = "0.29.33"
+pyjnius = "^1.4.2"
+beautifulsoup4 = "^4.12.2"
+requests = "^2.29.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
